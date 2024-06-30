@@ -20,12 +20,9 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.post("/headline")
-async def create_news(news: News):
+@app.post("/get-news")
+async def get_news_from_headline(news: News):
     news_headline = news.headline
-
-    await module_main.passHeadline(news_headline)
-    return {
-        "results": results,
-        "usage_metrics": usage_metrics
-    }
+    response = await module_main.passHeadline(news_headline)
+    
+    return response

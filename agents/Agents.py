@@ -119,6 +119,7 @@ class NewsAgents():
             verbose=True,
             allow_delegation=False,
             max_iter=5,
+            tools=[search_tool],
             memory=True,
             step_callback=lambda x: print_agent_output(
                 x, "Content Generation Agent"),

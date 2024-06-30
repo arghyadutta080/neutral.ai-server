@@ -1,3 +1,4 @@
+from agents.Utils import print_agent_output, GROQ_LLM
 import os
 import json
 from dotenv import load_dotenv
@@ -53,9 +54,9 @@ class NEWSAGENCY:
         # crew with agents and tasks
         self.crew = Crew(
             agents=[S_news_scraper_agent, S_news_fact_checker_agent,
-                    content_generation_agent, editor_agent],
+                    content_generation_agent],
             tasks=[headline_scrape_task, s_fact_chack_task,
-                   content_generation_task, editing_task],
+                   content_generation_task],
             verbose=2,
             process=Process.sequential,
             full_output=True,
@@ -67,17 +68,21 @@ class NEWSAGENCY:
 
         return results, self.crew.usage_metrics
 
+
 async def passHeadline(headline: str):
     news_automation = NEWSAGENCY()
     results, usage_metrics = news_automation.run(headline)
     print("Crew Work Results:")
     print(results)
+    print('------------------------------------------------------------------')
     print("Usage Metrics:")
     print(usage_metrics)
 
-if __name__ == "__main__":  
-    # headline_xyz = input("Enter the news headline: ")
+    with open("news_articles.json") as file:
+        data = file.read()
+
+    return { 'response': data }
+
+
+if __name__ == "__main__":
     passHeadline(headline)
-    
-
-
